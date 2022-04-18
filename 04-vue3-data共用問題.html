@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <!-- vm1 -->
+    <div id="app1">
+      <input type="text" v-model="title" />
+    </div>
+    <!-- vm2 -->
+    <div id="app2">
+      <input type="text" v-model="title" />
+    </div>
+
+    <script>
+      //vue3
+      // data 在實體外面定義
+      const dataObj = {
+        title: "3",
+        msg: "7",
+      };
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+      }).mount("#app1");
+
+      const vm2 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+      }).mount("#app2");
+      // 直接更新會同步影響，除非用淺拷貝或深拷貝的方式 return { ...dataObj }就不會影響
+      vm2.$data.title = "更新";
+      console.log("vm2.$data", vm2.$data);
+      console.log("vm1.$data", vm1.$data);
+      console.log("dataObj", dataObj);
+    </script>
+  </body>
+</html>

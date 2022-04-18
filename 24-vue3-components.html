@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <div>
+        <p>Count加總: {{count}}</p>
+        <button @click="count++">Plus</button>
+      </div> -->
+      <!-- v-on:[事件名稱]＝“運算式” or @事件名稱，板模裡就不用加this-->
+      <p>元件化--------------------------------------------------------</p>
+      <new-counter></new-counter>
+      <new-counter></new-counter>
+    </div>
+
+    <script>
+      //vue3
+
+      // Vue3元件化
+      //起手勢：const app = Vue.createApp({});
+      //app.component('元件名稱',{template:``,data(){},...});
+      //app.mount('#app')新增一個「根實體」，並掛載於 #app 之上
+      const app = Vue.createApp({});
+      app.component("new-counter", {
+        template: `<div>
+                  <p>Count加總: {{count}}</p>
+              <button @click="count++">Plus</button>
+          </div>`,
+        data() {
+          return { count: 0 };
+        },
+      });
+      app.mount("#app");
+
+      // data 在實體外面定義
+
+      // const vm = Vue.createApp({
+      //   data() {
+      //     return { count: 0 };
+      //   },
+      // });
+      // vm.mount("#app");
+    </script>
+  </body>
+</html>

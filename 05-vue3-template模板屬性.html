@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app1"></div>
+
+    <script>
+      //vue3
+      // template 模板屬性
+      const dataObj = {
+        title: "template板模屬性",
+        msg: "7",
+      };
+      const vm1 = Vue.createApp({
+        template: `<a href="https://book.vue.tw/CH1/1-2-instance.html#template-%E6%A8%A1%E6%9D%BF%E5%B1%AC%E6%80%A7" alt="">{{title}}</a>`,
+        data() {
+          return { ...dataObj };
+        },
+      }).mount("#app1");
+      //Vue 2.x 的模板注意!
+      // 每個 Vue 實體就是一個元件 當中的第一層只能也必需要有一個元素。
+      // 1.沒有根元素 EX: template: `{{title}}很好！`
+      // 2.超過一個根元素 EX: template: `<div>{{title}}</div><div>{{msg}}</div>`
+      // 整體會出錯，Ｃomponent template should contain exactly one root element
+      // 但Vue 3.0 採用 fragments 來進行模板 DOM 編譯，所以這個問題就不再存在了
+    </script>
+  </body>
+</html>

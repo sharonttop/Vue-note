@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <style></style>
+  </head>
+  <body>
+    <!-- 可透過 v-for 指令在模板中，將「陣列」或「物件」類型的資料進行迭代渲染 (重複呈現在畫面上)。 -->
+    <!--v-for和v-if不要寫在一起，可用template分開  -->
+    <div id="app">
+      <template v-for="(memberCards,index) in members" :key="memberCards.id">
+        <div v-if="memberCards.age>3" style="color: blue">
+          {{index+1}}-{{memberCards.name}}目前{{memberCards.age}}歲
+        </div>
+        <div v-else style="color: black">
+          {{index+1}}-{{memberCards.name}}目前{{memberCards.age}}歲
+        </div>
+      </template>
+    </div>
+    <!-- 也可以遍歷物件形式的資料 -->
+    <div id="app2">
+      <p>Sharon</p>
+      <template v-for="(val,key,index) in Sharon">
+        <div>{{index+1}}-{{key}}:{{val}}</div>
+      </template>
+    </div>
+
+    <script>
+      //vue3
+      const dataObj = {
+        members: [
+          { id: 1, name: "圓圓", age: 9 },
+          { id: 2, name: "藍寶", age: 3 },
+          { id: 3, name: "俊雄", age: 1 },
+          { id: 4, name: "金宇彬", age: 4 },
+        ],
+      };
+
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+      }).mount("#app");
+
+      const dataObj2 = {
+        Sharon: {
+          gender: "female",
+          age: 27,
+          skill: "Japanese & program coding",
+        },
+      };
+
+      const vm2 = Vue.createApp({
+        data() {
+          return { ...dataObj2 };
+        },
+      }).mount("#app2");
+    </script>
+  </body>
+</html>

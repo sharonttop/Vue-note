@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+      #app {
+        display: block;
+        width: 100%;
+        padding-top: 1rem;
+      }
+
+      .messages {
+        padding: 6px 10px;
+        width: 95%;
+        height: 100px;
+        margin-bottom: 1em;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+      }
+
+      input[type="text"] {
+        padding: 3px 5px;
+        width: 95%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app1">
+      <div class="messages">
+        <div v-for="m in messages">{{ m }}</div>
+      </div>
+      <input type="text" v-model="msg" @keydown.enter="addToMessages" />
+      <!-- @keyup.enter 也可-->
+    </div>
+
+    <script>
+      //vue3
+      const dataObj = {
+        msg: "",
+        messages: [],
+      };
+
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+        computed: {
+          addToMessages() {
+            this.messages.push(this.msg);
+            this.msg = "";
+          },
+        },
+      }).mount("#app1");
+    </script>
+  </body>
+</html>

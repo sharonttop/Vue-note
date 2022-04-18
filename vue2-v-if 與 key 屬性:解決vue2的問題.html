@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue-test3</title>
+    <script
+      src="./vue.js/vue.min.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+  </head>
+  <body>
+    <!-- v-if 與 key 屬性 解決vue2的問題-->
+    <!-- 預設情況下會選擇重複利用已經存在的元素而不是重新渲染 -->
+    <div id="app">
+      Choose One:
+      <label>
+        <input type="radio" value="username" v-model="loginType" />
+        Username
+      </label>
+
+      <label>
+        <input type="radio" value="email" v-model="loginType" />
+        Email
+      </label>
+
+      <hr />
+
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username" key="username" />
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" key="email" />
+      </template>
+    </div>
+    <h1>v-if 與 key 屬性 解決vue2的問題</h1>
+    <p>
+      Vue.js
+      為了提高網頁渲染的效率，在預設情況下會選擇重複利用已經存在的元素而不是重新渲染。
+      這樣的做法確實能提高效能，不過在某些場景下可能會出現問題。
+    </p>
+    <p>
+      v-if:會根據key屬性的內容是否相同來決定是放要重新渲染元素，當判斷條件的結果幾乎不變的時候，像是判斷使用者是否登入的區塊，漸少元素數量來降低成本，效能更好。
+    </p>
+    <p>
+      v-show:因為屬性一直存在所以不用加key，當DOM或元件得狀態需要被保留且頻繁更動時建議使用，不會被動態增加會刪減效能更佳。
+    </p>
+    <p></p>
+    <script>
+      const vm = new Vue({
+        data: () => {
+          return {
+            loginType: "username",
+          };
+        },
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

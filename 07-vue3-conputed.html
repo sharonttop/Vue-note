@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app1">
+      <p>金額總共{{computedSubtotal}}元</p>
+      <p>金額總共{{computedSubtotal}}元</p>
+      <p>金額總共{{computedSubtotal}}元</p>
+      <p>金額總共{{methodsSubtotal()}}元</p>
+      <p>金額總共{{methodsSubtotal()}}元</p>
+      <p>金額總共{{methodsSubtotal()}}元</p>
+    </div>
+
+    <script>
+      //vue3
+      // data 在實體外面定義
+      const dataObj = {
+        price: "100",
+        quantity: "4",
+      };
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+        computed: {
+          // computed 會將結果暫存起來，當參考到的資料改變時，computed 才會重新計算
+          computedSubtotal() {
+            console.log("computedSubtotal");
+            return this.price * this.quantity;
+          },
+        },
+        methods: {
+          // method 是不管有無相依都會計算
+          methodsSubtotal() {
+            console.log("methodsSubtotal");
+            return this.price * this.quantity;
+          },
+        },
+      }).mount("#app1");
+
+      /*
+      需要每次更新，就用 method在意效能，就用 computed
+      如果是同樣的重複計算，用 computed 來處理會比 methods 效能來得好， 但要注意的是， computed 屬性中的 function 無法使用參數，若有需要帶入參數的情況，還是只能使用 mehtods 來處理囉。
+      */
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue-test3</title>
+    <script
+      src="./vue.js/vue.min.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+  </head>
+  <body>
+    <div id="app">I have {{a}} and {{b}}.</div>
+    <script>
+      let obj = { a: "apple", b: "banana" };
+      // Object.freeze(obj);//阻止渲染現有的屬性，停止追蹤
+      let vm = new Vue({
+        el: "#app",
+        data: obj,
+      });
+      vm.$watch("a", function (n, o) {
+        // 能夠監聽物件的變化
+        console.log("newValue", n);
+        console.log("oldValue", o);
+      });
+      vm.$data.a = "egg"; //無法在此生成變量，一定要在new Vue內部提前宣告。
+
+      // vm.a = "egg";和obj.a = "egg"和vm.a = "egg";有一樣的結果
+    </script>
+  </body>
+</html>

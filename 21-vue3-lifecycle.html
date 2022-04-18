@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <style></style>
+  </head>
+  <body>
+    <div id="app"><input type="text" v-model="msg" />{{ msg }}</div>
+
+    <script>
+      //vue3
+      const vm = Vue.createApp({
+        data() {
+          return { msg: "hello~" };
+        },
+        created() {
+          console.log("created");
+        },
+        mounted() {
+          console.log("mounted");
+        },
+        updated() {
+          console.log("updated");
+        },
+        unmounted() {
+          console.log("unmounted");
+        },
+      });
+      //若未執行mount動作，則後續所有的lifecycle hook都將不會執行
+      vm.mount("#app");
+      // 若在 Vue.createApp 時直接接上 .mount(...)，則無法透過 vm.unmount() 來卸載元件
+
+      // vm.unmount();
+    </script>
+  </body>
+</html>

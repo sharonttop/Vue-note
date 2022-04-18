@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app3">{{msg}}</div>
+    <div id="app4">{{msg}}</div>
+
+    <script>
+      //vue3
+      const vm = Vue.createApp({
+        data() {
+          return { msg: "原本的內容" };
+        },
+      }).mount("#app3");
+
+      vm.$data.msg = "改變的內容";
+
+      //若是分開掛載，要先執行vm.mount('#app')，才找得到＄data
+      const vm2 = Vue.createApp({
+        data() {
+          return { msg: "指定變數版本(分開版)" };
+        },
+      });
+      const vMountedInstance = vm2.mount("#app4");
+      vMountedInstance.$data.msg = "改變的內容（分開版）";
+    </script>
+  </body>
+</html>

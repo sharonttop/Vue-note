@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>Count加總: {{count}}</p>
+      <button @click="count++">Plus</button>
+      <!-- v-on:[事件名稱]＝“運算式” or @事件名稱，板模裡就不用加this-->
+    </div>
+    <div id="app1">
+      <button v-on:click="plus">Plus</button>
+      <!-- v-on觸發事件時，若沒有指定參數，預設就會將event物件當作參數傳入 -->
+    </div>
+    <div id="app2">
+      <p>amount數量（要加的數字）:<input v-model.number="amount" /></p>
+      <p>Count加總: {{count}}</p>
+      <button v-on:click="plus(amount,$event)">Plus相加</button>
+      <!-- 當mothods要傳入參數時可以在板模中指定傳入$event來指定event的物件，少了＄就undefined (reading 'target' 注意computed是無法傳參數的-->
+    </div>
+
+    <script>
+      //vue3
+      // data 在實體外面定義
+      const dataObj = {
+        count: 0,
+        amount: 0,
+      };
+      const vm = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+      }).mount("#app");
+      /*
+      除了寫在板模上也可寫成如下
+      const vm = Vue.createApp({
+        data() {
+          return {
+            count: 0,
+          };
+        },
+        methods: {
+          plus: function () {
+            this.count++;
+          },
+        },
+      }).mount("#app");
+      */
+
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+        methods: {
+          plus(event) {
+            // v-on觸發事件時，若沒有指定參數，預設就會將event物件當作參數傳入
+            console.log(event.target.tagName);
+          },
+        },
+      }).mount("#app1");
+
+      const vm2 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+        methods: {
+          plus(amount, event) {
+            console.log(event.target.tagName);
+            this.count += amount;
+          },
+        },
+      }).mount("#app2");
+    </script>
+  </body>
+</html>

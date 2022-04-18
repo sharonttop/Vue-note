@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>文字框輸入的內容：{{ msg }}</p>
+      <input type="text" v-model="msg" />
+    </div>
+    <div id="app1">
+      <p>文字框輸入的內容v-model.trim.lazy：{{ msgLazy }}</p>
+      <input type="text" v-model.trim.lazy="msgLazy" />
+      <p>
+        lazy用法：從原本的input事件改為監聽change事件，輸入者離開輸入匡焦點才更新
+      </p>
+      <p>trim用法：更新時自動過濾掉前後的空白字元</p>
+    </div>
+
+    <div id="app2">
+      <p>文字方塊textarea:{{msg}}</p>
+      <textarea v-model="msg"></textarea>
+    </div>
+
+    <div id="app3">
+      <div>
+        <input type="radio" id="1" value="5" v-model="picked" />
+        <label for="one">One</label>
+      </div>
+      <div>
+        <input type="radio" id="2" value="6" v-model="picked" />
+        <label for="two">Two</label>
+      </div>
+      <span>Picked:{{picked}}</span>
+    </div>
+    <div id="app4">
+      <input type="checkbox" id="sharon" value="sharon" v-model="checkNames" />
+      <label for="sharon">Sharon</label>
+      <input type="checkbox" id="Judy" value="Judy" v-model="checkNames" />
+      <label for="sharon">Judy</label>
+      <input type="checkbox" id="taki" value="taki" v-model="checkNames" />
+      <label for="taki">Taki</label>
+      <input type="checkbox" id="mindy" value="mindy" v-model="checkNames" />
+      <label for="mindy">Mindy</label>
+      <br />
+      <span>checkNames:{{checkNames}}</span>
+    </div>
+    <div id="app5">
+      <input type="checkbox" v-model="isChecked" />
+      <label for="">同意本條約</label>
+      <br />
+      <span>是否同意:{{isChecked}}</span>
+    </div>
+
+    <div id="app6">
+      <select v-model="selected">
+        <label for="">同意本條約</label>
+        <option disabled value="">請選擇</option>
+        <option>台北市</option>
+        <option>新北市</option>
+        <option>基隆市</option>
+      </select>
+      <p>Selected:{{selected || '未選擇'}}</p>
+    </div>
+
+    <div id="app7">
+      <p>.number用法:解決數字相加變字串相加問題</p>
+      <input v-model.number="num1" />+<input v-model.number="num2" />={{sum}}
+    </div>
+
+    <script>
+      //vue3
+      // input
+      const vm = Vue.createApp({
+        data() {
+          return { msg: "" };
+        },
+      }).mount("#app");
+
+      // input.lazy
+      const vm1 = Vue.createApp({
+        data() {
+          return { msgLazy: "" };
+        },
+      }).mount("#app1");
+
+      //文字方塊textarea
+      const vm2 = Vue.createApp({
+        data() {
+          return { msg: "" };
+        },
+      }).mount("#app2");
+      //radio
+      const vm3 = Vue.createApp({
+        data() {
+          return { picked: 6 };
+          // 抓value
+        },
+      }).mount("#app3");
+      //checkbox(複選)
+      const vm4 = Vue.createApp({
+        data() {
+          // 複選要設定成陣列
+          return { checkNames: [] };
+          // 抓value
+        },
+      }).mount("#app4");
+
+      //checkbox(單選)
+      const vm5 = Vue.createApp({
+        data() {
+          return { isChecked: false };
+        },
+      }).mount("#app5");
+
+      //select下拉式選單
+      const vm6 = Vue.createApp({
+        data() {
+          return { selected: "" };
+        },
+      }).mount("#app6");
+
+      // .number用法
+      const vm7 = Vue.createApp({
+        data() {
+          return { num1: 0, num2: 0 };
+        },
+        computed: {
+          sum() {
+            return this.num1 + this.num2;
+          },
+        },
+      }).mount("#app7");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app1">{{msg}}</div>
+
+    <div id="app3">{{msg}}</div>
+    <div id="app2">{{msg}}</div>
+
+    <script>
+      //vue3
+      /*
+      起手式
+      可以等待需要的時候再 mount 到某個節點上
+      const vm3= Vue.createApp({ options物件})
+      vm3.mount('要綁定的東西');
+
+      或是也可以不指定變數，就直接將 Vue.createApp 生成的物件實體拿來使用
+      Vue.createApp({ options物件}).mount('要綁定的東西');
+      */
+
+      const vm = Vue.createApp({
+        data() {
+          return { msg: "123456" };
+        },
+      }).mount("#app1");
+
+      // 也可拆開
+      const vm2 = Vue.createApp({
+        data() {
+          return { msg: "指定變數版本" };
+        },
+      });
+      vm.mount("#app2");
+
+      // 也可以不指定變數，就直接將 Vue.createApp 生成的物件實體拿來使用：
+      Vue.createApp({
+        data() {
+          return { msg: "不指定變數版本" };
+        },
+      }).mount("#app3");
+    </script>
+  </body>
+</html>

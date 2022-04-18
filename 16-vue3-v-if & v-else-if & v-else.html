@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+      #app {
+        display: block;
+        padding: 1rem;
+      }
+
+      h4 {
+        margin-bottom: 1rem;
+      }
+
+      button {
+        margin-right: 1em;
+      }
+
+      .wrap {
+        display: block;
+        overflow: hidden;
+        margin-top: 2rem;
+      }
+
+      .wrap > div {
+        float: left;
+        margin-right: 2rem;
+        display: block;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: #fff;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h4>count: {{count}}</h4>
+      <button @click="count++">Plus</button>
+      <button @click="count=0">Reset</button>
+
+      <div class="wrap">
+        <div v-if="count===0" style="background-color: #faf">count=0</div>
+        <div v-else-if="count < 5" style="background-color: #afa">
+          count < 5
+        </div>
+        <div v-else style="background-color: #aaa">以上以外的</div>
+      </div>
+    </div>
+    <!-- <template> 標籤表示法：Vue.js 在模板編譯後並不會將 <template> 渲染至畫面上，也仍保有 v-if 指令的作用 -->
+    <div id="app2">
+      <p>value是{{value}}</p>
+      <!-- 輸入Ａ就會顯示Ａ的內容，以外的就會顯示Ｂ -->
+      <input type="text" v-model.trim.lazy="value" />
+      <template v-if="value === 'A'">
+        <h1>Title A</h1>
+        <p>Paragraph A-1</p>
+        <p>Paragraph A-2</p>
+      </template>
+      <template v-else>
+        <h1>Title B</h1>
+        <p>Paragraph B-1</p>
+        <p>Paragraph B-2</p>
+      </template>
+    </div>
+    <!-- v-if 與 key 屬性 解決vue2的問題，Vue3已經解決此問題-->
+    <!-- 預設情況下會選擇重複利用已經存在的元素而不是重新渲染 -->
+    <!-- for Vue 2.x -->
+    <div id="app3">
+      Choose One:
+      <label>
+        <input type="radio" value="username" v-model="loginType" />
+        Username
+      </label>
+
+      <label>
+        <input type="radio" value="email" v-model="loginType" />
+        Email
+      </label>
+      <hr />
+
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username" />
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" />
+      </template>
+    </div>
+
+    <script>
+      //vue3
+      const dataObj = {
+        count: 0,
+      };
+
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+      }).mount("#app");
+
+      const vm2 = Vue.createApp({
+        data() {
+          return { value: "" };
+        },
+      }).mount("#app2");
+
+      const vm3 = Vue.createApp({
+        data() {
+          return { loginType: "username" };
+        },
+      }).mount("#app3");
+    </script>
+  </body>
+</html>

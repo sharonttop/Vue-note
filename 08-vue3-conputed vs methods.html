@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app1">
+      <p>1 日幣 = 0.278 台幣, 且 1 美金 = 28.540 台幣:</p>
+      <div>台幣<input type="text" v-model="twd" v-on:input="twd2jpy" /></div>
+      <div>日幣<input type="text" v-model="jpy" v-on:input="jpy2twd" /></div>
+      <div>美金<input type="text" v-model="usd" /></div>
+    </div>
+
+    <script>
+      //vue3
+      // data 在實體外面定義
+      const dataObj = {
+        twd: 1000,
+        // jpy: 0,
+      };
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+        computed: {
+          usd: {
+            get() {
+              return Number.parseFloat(Number(this.twd) / 28.54).toFixed(3);
+            },
+            set(val) {
+              this.twd = Number.parseFloat(Number(val) * 28.54).toFixed(3);
+            },
+          },
+          jpy: {
+            get() {
+              return Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);
+            },
+            set(val) {
+              this.twd = Number.parseFloat(Number(val) * 0.278).toFixed(3);
+            },
+          },
+        },
+
+        // methods: {
+        //   twd2jpy() {
+        //     this.jpy = Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);
+        //   },
+        //   jpy2twd() {
+        //     this.twd = Number.parseFloat(Number(this.jpy) * 0.278).toFixed(3);
+        //   },
+        // },
+        // mounted() {
+        //   this.twd2jpy();
+        // },
+      }).mount("#app1");
+
+      /*
+      需要每次更新，就用 method，在意效能就用 computed
+      如果是同樣的重複計算，用 computed 來處理會比 methods 效能來得好， 但要注意的是， computed 屬性中的 function 無法使用參數，若有需要帶入參數的情況，還是只能使用 mehtods 來處理囉。
+      */
+    </script>
+  </body>
+</html>

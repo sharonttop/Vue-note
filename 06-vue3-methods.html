@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app1">
+      <p>{{price}}元</p>
+      <p>{{quantity}}個</p>
+      <p>金額總共{{subtotal()}}元</p>
+    </div>
+
+    <script>
+      //vue3
+      // data 在實體外面定義
+      const dataObj = {
+        price: "100",
+        quantity: "4",
+      };
+      const vm1 = Vue.createApp({
+        data() {
+          return { ...dataObj };
+        },
+        methods: {
+          // 也可寫成subtotal: function (){}
+          subtotal() {
+            return this.price * this.quantity;
+          },
+        },
+      }).mount("#app1");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo 範例製作</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="images/favicon.ico" rel="shortcut icon" />
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/stylesheets/all.css" />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
+      integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.8/js/regular.js"
+      integrity="sha384-t7yHmUlwFrLxHXNLstawVRBMeSLcXTbQ5hsd0ifzwGtN7ZF7RZ8ppM7Ldinuoiif"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"
+      integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/javascripts/vendor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  </head>
+
+  <body class="bg-lighter">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">Vue.js 練習手冊</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarText"
+        aria-controls="navbarText"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/basic/dev.html">基礎教學</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/template/basic.html">模板指令</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/components/basic.html">組件</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/api/vue_set.html">常用 API</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/es6/let_const.html">ES6</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-md-3">
+          <div>
+            <h6 class="text-capitalize text-muted">basic</h6>
+
+            <a href="/basic/dev.html" class="btn btn-block btn-link">
+              Vue 的開發環境
+            </a>
+
+            <a href="/basic/instant.html" class="btn btn-block btn-link">
+              建立 Vue 的應用程式
+            </a>
+
+            <a href="/basic/mvvm.html" class="btn btn-block btn-link">
+              MVVM 是什麼樣的概念
+            </a>
+
+            <a href="/basic/directive.html" class="btn btn-block btn-link">
+              指令
+            </a>
+
+            <a href="/basic/if_for.html" class="btn btn-block btn-link">
+              模板語法的延伸 v-if 及 v-for
+            </a>
+
+            <a href="/basic/v_on.html" class="btn btn-block btn-link">
+              處理互動式行為 v-on 指令
+            </a>
+
+            <a href="/basic/defined_var.html" class="btn btn-block btn-link">
+              預先定義資料結構
+            </a>
+
+            <a href="/basic/modifiers.html" class="btn btn-block btn-link">
+              修飾符 與 縮寫
+            </a>
+
+            <a href="/basic/v_class.html" class="btn btn-block btn-link">
+              切換 Class
+            </a>
+
+            <a href="/basic/computed.html" class="btn btn-block btn-link">
+              計算屬性
+            </a>
+
+            <a href="/basic/form.html" class="btn btn-block btn-link">
+              表單雙向綁定
+            </a>
+
+            <a href="/basic/components.html" class="btn btn-block btn-link">
+              元件化
+            </a>
+
+            <a href="/basic/todo.html" class="btn btn-block btn-primary active">
+              Todo 範例練習
+            </a>
+
+            <a href="/basic/v_lifecycle.html" class="btn btn-block btn-link">
+              延伸介紹 - Vue 生命週期
+            </a>
+          </div>
+        </div>
+
+        <div class="col-md-9 post">
+          <!-- 練習開始 -->
+          <h1 class="mt-0 text-muted">Todo 範例製作</h1>
+
+          <div class="alert alert-secondary">
+            <ol class="mb-0">
+              <li>請跟隨課程完成此章節。</li>
+            </ol>
+          </div>
+
+          <div id="app">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">待辦事項</span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="準備要做的任務"
+                v-model="newTodo"
+                @keyup.enter="addTodo"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" @click="addTodo">
+                  新增
+                </button>
+              </div>
+            </div>
+            <div class="card text-center">
+              <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      :class="{'active': visibility == 'all'}"
+                      @click="visibility='all'"
+                      href="#"
+                      >全部</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="#"
+                      :class="{'active': visibility == 'active'}"
+                      @click="visibility='active'"
+                      >進行中</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      href="#"
+                      :class="{'active': visibility == 'done'}"
+                      @click="visibility='done'"
+                      >已完成</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <ul class="list-group list-group-flush text-left">
+                <li
+                  class="list-group-item"
+                  v-for="(item,index) in filteredTodos"
+                  @dblclick="editTodos(item)"
+                >
+                  <div class="d-flex" v-if="item.id !== cacheTodo.id">
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        :id="item.id"
+                        v-model="item.completed"
+                        @click="todoActiveCounter(item)"
+                      />
+                      <label
+                        class="form-check-label"
+                        :class="{'completed':item.completed}"
+                        :for="item.id"
+                      >
+                        {{ item.title }}
+                      </label>
+                    </div>
+                    <button
+                      type="button"
+                      class="close ml-auto"
+                      aria-label="Close"
+                      @click="removeTodo(item)"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="cacheTodoTitle"
+                    @keyup.esc="cancelEdit()"
+                    @keyup.enter="editDone(item)"
+                    v-if="item.id === cacheTodo.id"
+                  />
+                </li>
+                <div class="card-footer d-flex justify-content-between">
+                  <span>還有 {{todoCounter}} 筆任務未完成</span>
+                  <a href="#" @click="removeAllTodos">清除所有任務</a>
+                </div>
+              </ul>
+              <!-- <div class="card-footer d-flex justify-content-between">
+                <span>還有 3 筆任務未完成</span>
+                <a href="#">清除所有任務</a>
+              </div> -->
+            </div>
+          </div>
+
+          <script>
+            var app = new Vue({
+              el: "#app",
+              data: {
+                newTodo: "",
+                todos: [
+                  {
+                    id: "",
+                    title: "您好",
+                    completed: false,
+                  },
+                ],
+                cacheTodo: {},
+                cacheTodoTitle: "",
+                visibility: "all",
+                todoCounter: 0,
+              },
+              methods: {
+                addTodo() {
+                  var value = this.newTodo.trim();
+                  var timestamp = Math.floor(Date.now());
+                  // console.log(value, timestamp);
+                  if (!value) {
+                    return;
+                  }
+                  this.todos.push({
+                    id: timestamp,
+                    title: value,
+                    completed: false,
+                  });
+                  console.log(this.todos.length);
+                  this.todoCounter = this.todos.length;
+                  this.newTodo = "";
+                },
+                removeTodo(todo) {
+                  /*會使用多定義一個 vm 變數來存放 this 的原因其實是因為，雖然大多數的情況下使用 this 都是直接指向 Vue，但是也是會有少數情況的 this 會無法取到 Vue 本身，為了在那種情況下還是可以取到 Vue 本身，所以通常都會多使用一個變數來確保喔!如:在函式中使用箭頭函式。*/
+                  var vm = this;
+                  var newIndex = vm.todos.findIndex(function (item, key) {
+                    return todo.id === item.id;
+                  });
+
+                  this.todos.splice(newIndex, 1);
+                },
+                editTodos(item) {
+                  console.log(item);
+                  this.cacheTodo = item;
+                  this.cacheTodoTitle = item.title;
+                  // console.log("this.cacheTodo", this.cacheTodo);
+                },
+                cancelEdit() {
+                  // console.log("esc");
+                  this.cacheTodo = {};
+                },
+                editDone(item) {
+                  // console.log("Done");
+                  item.title = this.cacheTodoTitle;
+                  item.cacheTodoTitle = "";
+                  this.cacheTodo = {};
+                },
+                // 我原本想要用打勾的那個click動作來抓全部有幾個completed是false但發現根本抓不到，也想用下面切頁籤到「進行中」的方式處理，但發現要點到那邊才會改變todoCounter的數字，剛進去是會選在全部的地方，那就會顯示0筆，我越搞越複雜。想先求著你～～
+                todoActiveCounter(item) {
+                  // console.log("Activeitem", this.todos);
+                  var allTodo = this.todos;
+                  // console.log(allTodo.length);
+                  let newTodo = allTodo.filter(function (el, index, arr) {
+                    return !el.completed;
+                  });
+                  console.log(newTodo);
+                },
+                removeAllTodos(event) {
+                  event.preventDefault();
+                  // console.log("removeAllTodos");
+                  this.todos = [];
+                  this.todoCounter = 0;
+                },
+              },
+              computed: {
+                filteredTodos() {
+                  let allTodos = 0;
+                  if (this.visibility == "all") {
+                    // this.todoCounter = this.todos.length;
+                    return this.todos;
+                  } else if (this.visibility == "active") {
+                    console.log("active");
+                    var newTodos = [];
+                    this.todos.forEach(function (item) {
+                      if (!item.completed) {
+                        newTodos.push(item);
+                      }
+                    });
+                    // console.log("newTodosA", newTodos.length);
+                    // console.log("todoCounter", this.todoCounter);
+                    this.todoCounter = newTodos.length;
+                    allTodos = newTodos.length;
+
+                    return newTodos;
+                  } else if (this.visibility == "done") {
+                    console.log("done");
+
+                    var newTodos = [];
+                    this.todos.forEach(function (item) {
+                      if (item.completed) {
+                        newTodos.push(item);
+                        // console.log("newTodosD", newTodos);
+                      }
+                    });
+                    return newTodos;
+                  }
+                  return [];
+                },
+              },
+            });
+          </script>
+
+          <style>
+            .completed {
+              text-decoration: line-through;
+            }
+          </style>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
